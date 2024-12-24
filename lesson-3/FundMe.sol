@@ -15,12 +15,12 @@ contract FundMe {
     
     AggregatorV3Interface internal dataFeed;
 
-    uint256 constant TARGET = 1000 * 10 ** 18;
+    uint256 constant TARGET = 1000 * 10 ** 18;//筹款的目标值
 
     address public owner;
 
-    uint256 deploymentTimestamp;
-    uint256 lockTime;
+    uint256 deploymentTimestamp;//合约部署时间
+    uint256 lockTime;//锁定多久（秒）
 
     address erc20Addr;
 
@@ -36,7 +36,7 @@ contract FundMe {
 
     function fund() external payable {
         require(convertEthToUsd(msg.value) >= MINIMUM_VALUE, "Send more ETH");
-        require(block.timestamp < deploymentTimestamp + lockTime, "window is closed");
+        require(block.timestamp < deploymentTimestamp + lockTime, "window is closed");//超过众筹时间了
         fundersToAmount[msg.sender] = msg.value;
     }
 
@@ -51,7 +51,9 @@ contract FundMe {
         ) = dataFeed.latestRoundData();
         return answer;
     }
+    /*
 
+    */
     function convertEthToUsd(uint256 ethAmount) internal view returns(uint256){
         uint256 ethPrice = uint256(getChainlinkDataFeedLatestAnswer());
         return ethAmount * ethPrice / (10 ** 8);
@@ -60,7 +62,7 @@ contract FundMe {
     function transferOwnership(address newOwner) public onlyOwner{
         owner = newOwner;
     }
-
+    //达到目标值以后，自动将金额提取到发起者账户
     function getFund() external windowClosed onlyOwner{
         require(convertEthToUsd(address(this).balance) >= TARGET, "Target is not reached");
         // transfer: transfer ETH and revert if tx failed
@@ -77,7 +79,7 @@ contract FundMe {
         fundersToAmount[msg.sender] = 0;
         getFundSuccess = true; // flag
     }
-
+    //退款
     function refund() external windowClosed {
         require(convertEthToUsd(address(this).balance) < TARGET, "Target is reached");
         require(fundersToAmount[msg.sender] != 0, "there is no fund for you");
@@ -97,7 +99,7 @@ contract FundMe {
     }
 
     modifier windowClosed() {
-        require(block.timestamp >= deploymentTimestamp + lockTime, "window is not closed");
+        require(block.timestamp >= deploymentTimestamp + lockTime, "window is not closed");//众筹时间已过
         _;
     }
 
@@ -105,5 +107,7 @@ contract FundMe {
         require(msg.sender == owner, "this function can only be called by owner");
         _;
     }
+
+
 
 }
