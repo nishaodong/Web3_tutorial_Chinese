@@ -32,6 +32,7 @@ module.exports= async({getNamedAccounts, deployments}) => {
         log: true,
         waitConfirmations: confirmations
     })
+    //部署会使用原来部署好的合约
     // remove deployments directory or add --reset flag if you redeploy contract
 
     if(hre.network.config.chainId == 11155111 && process.env.ETHERSCAN_API_KEY) {

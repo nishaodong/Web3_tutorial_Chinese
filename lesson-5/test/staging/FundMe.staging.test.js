@@ -2,7 +2,8 @@ const { ethers, deployments, getNamedAccounts } = require("hardhat")
 const { assert, expect } = require("chai")
 const helpers = require("@nomicfoundation/hardhat-network-helpers")
 const {devlopmentChains} = require("../../helper-hardhat-config")
-
+//有网络名称时，跳过
+console.log('stgtest',devlopmentChains,network.name,devlopmentChains.includes(network.name))
 devlopmentChains.includes(network.name)
 ? describe.skip
 : describe("test fundme contract", async function() {

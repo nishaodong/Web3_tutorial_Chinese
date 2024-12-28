@@ -15,15 +15,21 @@
 3. 安装 NPM package
 -  运行 `npm install` 安装 NPM package
 4. 添加环境变量
-- `npx hardhat env-enc set-pw` 为 `.env.enc` 设置密码
-- 添加环境变量`npx hardhat env-enc set`: `PRIVATE_KEY`, `PRIVATE_KEY_1`, `SEPOLIA_RPC_URL` 和 `ETHERSCAN_API_KEY`
+- `npx env-enc set-pw` 为 `.env.enc` 设置密码
+- 添加环境变量`npx hardhat env-enc set`: `PRIVATE_KEY`, `ALCHEMY_API_KEY` 和 `ETHERSCAN_API_KEY`
 5. 编译并且与 `FundMe.sol` 交互
 - `npx hardhat run scripts/deployFundMe.js --network sepolia` 运行 deploy 脚本。
+0xAe8ACB7289d4d55Df3B4E02f3b67F1EdD3aEE302
+0xb08A25a4229Df6B35CB493b52734032b1F47228a
+0x76572eD458f5972cFBebc3567849F06e66590294
+
 6. 在 [Sepolia 区块链浏览器](https://sepolia.etherscan.io/)中查看验证的合约
 7. [可选] 运行 `npx hardhat deploy-fundme --network sepolia` 通过hardhat task部署`FundMe`合约
 8. [可选] 运行 `npx hardhat fund-fundme --network sepolia`通过hardhat task与`FundMe`合约交互
 
 更多的相关内容请查看[Web3_tutorial](https://github.com/smartcontractkit/Web3_tutorial_Chinese/tree/main)的 `README.md`。
+9.命令行验证合约
+npx hardhat verify --network sepolia 0x76572eD458f5972cFBebc3567849F06e66590294 "10"
 
 
 ## introduction

@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("@chainlink/env-enc").config()
+// require("@chainlink/env-enc").config()
+require("dotenv").config();
 require("./tasks")
 require("hardhat-deploy")
 require("@nomicfoundation/hardhat-ethers");
@@ -8,9 +9,9 @@ require("hardhat-deploy-ethers");
 
 const SEPOLIA_URL = process.env.SEPOLIA_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY
-const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1
+const PRIVATE_KEY_1 = process.env.PRIVATE_KEY1
 const EHTERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
-
+console.log(process.env.ALCHEMY_API_KEY,PRIVATE_KEY,PRIVATE_KEY_1)
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
@@ -20,7 +21,7 @@ module.exports = {
   },
   networks: {
     sepolia: {
-      url: SEPOLIA_URL,
+      url: "https://sepolia.infura.io/v3/" + process.env.ALCHEMY_API_KEY,
       accounts: [PRIVATE_KEY, PRIVATE_KEY_1],
       chainId: 11155111
     }
@@ -39,6 +40,6 @@ module.exports = {
     },
   },
   gasReporter: {
-    enabled: true
+    enabled: true //是否打印gas花费报告
   }
 };

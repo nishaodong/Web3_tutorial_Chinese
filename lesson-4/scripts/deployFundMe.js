@@ -16,7 +16,7 @@ async function main() {
     // verify fundme
     if(hre.network.config.chainId == 11155111 && process.env.ETHERSCAN_API_KEY) {
         console.log("Waiting for 5 confirmations")
-        await fundMe.deploymentTransaction().wait(5) 
+        await fundMe.deploymentTransaction().wait(5) //等待五个区块，确认交易
         await verifyFundMe(fundMe.target, [300])
     } else {
         console.log("verification skipped..")
@@ -24,7 +24,7 @@ async function main() {
 
     // init 2 accounts
     const [firstAccount, secondAccount] = await ethers.getSigners()
-    
+    console.log("firstAccount:",firstAccount)
     // fund contract with first account
     const fundTx = await fundMe.fund({value: ethers.parseEther("0.5")})
     await fundTx.wait()
